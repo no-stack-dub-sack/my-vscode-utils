@@ -18,6 +18,7 @@
   "activationEvents": [
     "onCommand:my-vscode-utils.toggleMetaFiles",
     "onCommand:my-vscode-utils.autoComment",
+    "onCommand:my-vscode-utils.surroundWithTryCatch",
     "onCommand:my-vscode-utils.surroundWithMultiLineComment"
   ],
   "main": "./out/extension.js",
@@ -30,6 +31,10 @@
       {
         "command": "my-vscode-utils.surroundWithMultiLineComment",
         "title": "Surround Selection with Multi-line Comment"
+      },
+      {
+        "command": "my-vscode-utils.surroundWithTryCatch",
+        "title": "Surround Selection with Try/Catch"
       }
     ],
     "keybindings": [
@@ -47,6 +52,11 @@
         "key": "ctrl+alt+m",
         "command": "my-vscode-utils.toggleMetaFiles",
         "when": "explorerViewletVisible"
+      },
+      {
+        "key": "ctrl+t+c",
+        "command": "my-vscode-utils.surroundWithTryCatch",
+        "when": "editorTextFocus"
       }
     ],
     "configuration": {
@@ -67,6 +77,14 @@
             ".trigger"
           ],
           "description": "Comment commands will apply to the file types in this array."
+        },
+        "my-vscode-utils.surroundWithTryCatch.catchArgs": {
+          "type": "object",
+          "default": {
+            ".cls,.cs": "Exception ex",
+            ".ts,.tsx,.js": "error"
+          },
+          "description": "Defines the catch block argument to be used for each postfix of file."
         }
       }
     }

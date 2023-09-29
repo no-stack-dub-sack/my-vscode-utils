@@ -2,10 +2,12 @@ import path = require("path");
 
 import * as vscode from "vscode";
 
+const EXTENSION_ID = "my-vscode-utils";
+
 export function activate(context: vscode.ExtensionContext) {
   const commands = {
     toggleMetaFiles: vscode.commands.registerCommand(
-      "my-vscode-utils.toggleMetaFiles",
+      `${EXTENSION_ID}.toggleMetaFiles`,
       async () => {
         const config = vscode.workspace.getConfiguration("files");
         const excludes = config.get("exclude") as any;
@@ -29,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
     ),
 
     autoComment: vscode.commands.registerTextEditorCommand(
-      "my-vscode-utils.autoComment",
+      `${EXTENSION_ID}.autoComment`,
       () => {
         const editor = vscode.window.activeTextEditor;
 
@@ -72,7 +74,7 @@ export function activate(context: vscode.ExtensionContext) {
     ),
 
     surroundWithMultiLineComment: vscode.commands.registerCommand(
-      "my-vscode-utils.surroundWithMultiLineComment",
+      `${EXTENSION_ID}.surroundWithMultiLineComment`,
       () => {
         const editor = vscode.window.activeTextEditor;
         if (editor) {
@@ -92,6 +94,95 @@ export function activate(context: vscode.ExtensionContext) {
         }
       }
     ),
+
+    surroundWithTryCatch: vscode.commands.registerCommand(
+      `${EXTENSION_ID}.surroundWithTryCatch`,
+      async () => {
+        const editor = vscode.window.activeTextEditor;
+        const config = vscode.workspace.getConfiguration(EXTENSION_ID);
+
+        const catchArgs = config.get("surroundWithTryCatch.catchArgs") as {
+          [key: string]: string;
+        };
+
+        if (editor) {
+          const document = editor.document;
+          const selection = editor.selection;
+
+          const linePadding = document.lineAt(
+            selection.start.line
+          ).firstNonWhitespaceCharacterIndex;
+
+          const selectedTextLines = document.getText(selection).split("\n");
+          const originalIndentation = " ".repeat(linePadding);
+
+          const { insertSpaces, tabSize } = editor.options as {
+            insertSpaces: boolean;
+            tabSize: number;
+          };
+
+          const additionalIndentation = insertSpaces
+            ? " ".repeat(tabSize as number)
+            : "\t";
+
+          const formattedLines = selectedTextLines
+            .map((line, idx) =>
+              idx === 0
+                ? `${originalIndentation + additionalIndentation}${line.trim()}`
+                : `${additionalIndentation}${line}`
+            )
+            .join("\n");
+
+          const tryIndent = originalIndentation.slice(
+            selection.start.character
+          );
+
+          let wrappedCode = `${tryIndent}try {\n${formattedLines}\n${originalIndentation}}`;
+
+          let catchCursorPos: vscode.Position | undefined = undefined;
+
+          const nextLine = document.lineAt(selection.end.line + 1);
+          const nextLineText = nextLine.text.trim();
+          const nextLineStartsWithClosingCurly = nextLineText.startsWith("}");
+          const nextLineIsEmpty = nextLineText === "";
+          const handleExceptionComment = "// handle the exception";
+
+          const end =
+            nextLineStartsWithClosingCurly || nextLineIsEmpty ? "" : "\n";
+
+          for (const key in catchArgs) {
+            const extensions = key.split(",");
+
+            if (extensions.includes(path.extname(document.fileName))) {
+              wrappedCode += ` catch (${catchArgs[key]}) {\n${originalIndentation}${additionalIndentation}${handleExceptionComment}\n${originalIndentation}}${end}`;
+
+              const line = document.lineAt(editor.selection.end).lineNumber + 3;
+
+              const character =
+                originalIndentation.length +
+                additionalIndentation.length +
+                handleExceptionComment.length +
+                1;
+
+              catchCursorPos = new vscode.Position(line, character);
+
+              break;
+            }
+          }
+
+          await editor.edit((editBuilder) => {
+            editBuilder.replace(selection, wrappedCode);
+          });
+
+          if (catchCursorPos) {
+            editor.selection = new vscode.Selection(
+              catchCursorPos,
+              catchCursorPos
+            );
+          }
+        }
+      }
+    ),
   };
 
   /**
@@ -100,7 +191,7 @@ export function activate(context: vscode.ExtensionContext) {
    */
   function isConfiguredExtension(document: vscode.TextDocument) {
     const fileExt = path.extname(document.fileName);
-    const config = vscode.workspace.getConfiguration("my-vscode-utils");
+    const config = vscode.workspace.getConfiguration(EXTENSION_ID);
     const fileTypes: string[] = config.get("comment.extensions") || [];
 
     if (fileTypes.length > 0 && fileTypes.includes(fileExt)) {
