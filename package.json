@@ -35,7 +35,7 @@
     "keybindings": [
       {
         "key": "enter",
-        "when": "editorTextFocus",
+        "when": "editorTextFocus && !suggestWidgetVisible && !editorHasSelection",
         "command": "my-vscode-utils.autoComment"
       },
       {
