@@ -24,3 +24,7 @@ The file types the this applies to can be configured in the `my-vscode-utils.com
 ### Surround Selection with Multi-Line Comment
 
 This feature is available in VS Code out-of-the-box, however it doesn't work with all file-types - specifically Apex. This command just overwrites the default keybinding (<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>/</kbd>) with the same behavior, but applies it to the file-types specified in the `my-vscode-utils.comment.extensions` configurations setting.The command can also be invoked from the Command Palette with the `Surround Selection with Multi-Line Comment` command.
+
+### Snippets
+
+See the Snippets [docs](./snippets/docs) for a list of snippets that this extension contributes. You can also use the `List Available Snippets` command to see a list of available snippets for each file type.

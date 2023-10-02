@@ -1,0 +1,7 @@
+{
+  "Prettier Ignore": {
+    "prefix": "prettierIgnore",
+    "body": ["// prettier-ignore"],
+    "description": "Insert a Prettier ignore comment"
+  }
+}

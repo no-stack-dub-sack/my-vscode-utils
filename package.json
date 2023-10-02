@@ -16,17 +16,44 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:my-vscode-utils.toggleMetaFiles",
-    "onCommand:my-vscode-utils.autoComment",
-    "onCommand:my-vscode-utils.surroundWithTryCatch",
-    "onCommand:my-vscode-utils.surroundWithMultiLineComment"
+    "onCommand:my-vscode-utils.autoComment"
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "snippets": [
+      {
+        "language": "javascript",
+        "path": "./snippets/JavaScript.json"
+      },
+      {
+        "language": "apex",
+        "path": "./snippets/Apex.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./snippets/TypeScript.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./snippets/TypeScript (React).json"
+      },
+      {
+        "language": "css",
+        "path": "./snippets/CSS.json"
+      },
+      {
+        "language": "scss",
+        "path": "./snippets/CSS.json"
+      }
+    ],
     "commands": [
       {
         "command": "my-vscode-utils.toggleMetaFiles",
         "title": "Hide/Show Salesforce Meta Files"
+      },
+      {
+        "command": "my-vscode-utils.listSnippets",
+        "title": "My VS Code Utils: List Available Snippets"
       },
       {
         "command": "my-vscode-utils.surroundWithMultiLineComment",
@@ -91,8 +118,9 @@
   },
   "scripts": {
     "vscode:prepublish": "yarn run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "build-snippets-docs": "node ./scripts/createSnippetDocs.js",
+    "compile": "yarn build-snippets-docs && tsc -p ./",
+    "watch": "yarn build-snippets-docs && tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"

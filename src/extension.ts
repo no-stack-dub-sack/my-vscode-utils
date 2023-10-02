@@ -1,4 +1,5 @@
 import path = require("path");
+import fs = require("fs");
 
 import * as vscode from "vscode";
 
@@ -38,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (editor) {
           const document = editor.document;
 
-          if (isConfiguredExtension(document)) {
+          if (isConfiguredFileExtension(document)) {
             const selection = editor.selection;
             const line = document.lineAt(selection.start.line);
 
@@ -80,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (editor) {
           const document = editor.document;
 
-          if (isConfiguredExtension(document)) {
+          if (isConfiguredFileExtension(document)) {
             const selection = editor.selection;
 
             // Get the selected text
@@ -183,13 +184,35 @@ export function activate(context: vscode.ExtensionContext) {
         }
       }
     ),
+
+    listSnippets: vscode.commands.registerCommand(
+      `${EXTENSION_ID}.listSnippets`,
+      async function () {
+        const getLangName = (fileName: string) => fileName.split(".")[0];
+
+        const chosenLanguage = await vscode.window.showQuickPick(
+          fs.readdirSync(context.asAbsolutePath("./snippets")).map(getLangName),
+          { placeHolder: "Select a language" }
+        );
+
+        if (chosenLanguage) {
+          const uri = vscode.Uri.file(
+            context.asAbsolutePath(
+              `./snippets/docs/${getLangName(chosenLanguage)}.md`
+            )
+          );
+
+          vscode.commands.executeCommand("markdown.showPreview", uri);
+        }
+      }
+    ),
   };
 
   /**
    * Checks is the current document's extension is included in the user's
    * configuration of file types to apply comment-type commands to.
    */
-  function isConfiguredExtension(document: vscode.TextDocument) {
+  function isConfiguredFileExtension(document: vscode.TextDocument) {
     const fileExt = path.extname(document.fileName);
     const config = vscode.workspace.getConfiguration(EXTENSION_ID);
     const fileTypes: string[] = config.get("comment.extensions") || [];
