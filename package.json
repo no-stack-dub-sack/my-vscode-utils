@@ -43,7 +43,7 @@
       },
       {
         "language": "scss",
-        "path": "./snippets/CSS.json"
+        "path": "./snippets/SCSS.json"
       }
     ],
     "commands": [

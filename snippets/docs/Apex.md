@@ -2,6 +2,8 @@
 
 ## Apex
 
+- **Add TODO comment** (_todo_): Insert a TODO comment
+- **Add TODO comment (with category)** (_todoc_): Insert a TODO comment with a category
 - **Prettier Ignore** (_prettierIgnore_): Insert a Prettier ignore comment
 - **List** (_newlist_): Apex List declaration
 - **Set** (_newset_): Apex Set declaration

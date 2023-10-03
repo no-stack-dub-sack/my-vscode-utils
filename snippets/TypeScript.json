@@ -15,5 +15,17 @@
     "prefix": "eslintInlineOff",
     "body": ["/* eslint ${1:rule}: off */$0"],
     "description": "Insert a comment to disable a specific ESLint rule inline"
+  },
+
+  "Add TODO comment": {
+    "prefix": "todo",
+    "body": ["// TODO: "],
+    "description": "Insert a TODO comment"
+  },
+
+  "Add TODO comment (with category)": {
+    "prefix": "todoc",
+    "body": ["// TODO $1: "],
+    "description": "Insert a TODO comment with a category"
   }
 }

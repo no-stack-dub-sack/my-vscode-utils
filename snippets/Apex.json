@@ -1,4 +1,16 @@
 {
+  "Add TODO comment": {
+    "prefix": "todo",
+    "body": ["// TODO: "],
+    "description": "Insert a TODO comment"
+  },
+
+  "Add TODO comment (with category)": {
+    "prefix": "todoc",
+    "body": ["// TODO $1: "],
+    "description": "Insert a TODO comment with a category"
+  },
+
   "Prettier Ignore": {
     "prefix": "prettierIgnore",
     "body": ["// prettier-ignore"],
