@@ -1,4 +1,12 @@
 {
+  "New React Hook": {
+    "prefix": "hook",
+    "body": [
+      "function use${1:HookName}(${2:args}) {\r\t$3\r}\r\rexport default use${1:HookName};"
+    ],
+    "description": "Create a new React hook"
+  },
+
   "Prettier Ignore": {
     "prefix": "prettierIgnore",
     "body": ["// prettier-ignore"],
