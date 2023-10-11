@@ -190,10 +190,17 @@ export function activate(context: vscode.ExtensionContext) {
       async function () {
         const getLangName = (fileName: string) => fileName.split(".")[0];
 
-        const chosenLanguage = await vscode.window.showQuickPick(
-          fs.readdirSync(context.asAbsolutePath("./snippets")).map(getLangName),
-          { placeHolder: "Select a language" }
-        );
+        const options = fs
+          .readdirSync(context.asAbsolutePath("./snippets/docs"))
+          .map(getLangName)
+          .filter((name) => name !== "All Snippets")
+          .concat(["All Snippets"]);
+
+        console.log(options);
+
+        const chosenLanguage = await vscode.window.showQuickPick(options, {
+          placeHolder: "Select a language",
+        });
 
         if (chosenLanguage) {
           const uri = vscode.Uri.file(
