@@ -19,6 +19,12 @@
     "description": "Insert a comment to disable ESLint rules for the next line"
   },
 
+  "ES Lint Disable Line": {
+    "prefix": "eslintDisableLine",
+    "body": ["// eslint-disable-line"],
+    "description": "Insert a comment to disable ESLint rules for the current line"
+  },
+
   "ES Lint Inline Off": {
     "prefix": "eslintInlineOff",
     "body": ["/* eslint ${1:rule}: off */$0"],
