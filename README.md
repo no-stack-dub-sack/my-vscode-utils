@@ -1,3 +1,9 @@
+<br/>
+<div align="center">
+  <img width="380px" src="./assets/logo-large.png">
+</div>
+<br/>
+
 # My VS Code Utils
 
 A collection of very simple utilities that fix things that annoy me or accomplish simple tasks that help with productivity. I have no intention of ever publishing this.

@@ -2,6 +2,8 @@
   "name": "my-vscode-utils",
   "displayName": "My VS Code Utils",
   "author": "Peter Weinberg",
+  "publisher": "Dub Sack Publishing, Inc.",
+  "icon": "./assets/logo.png",
   "license": "MIT",
   "repository": {
     "type": "git",
