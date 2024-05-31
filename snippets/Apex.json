@@ -250,7 +250,7 @@
     "prefix": "remoteaction",
     "body": [
       "@RemoteAction",
-      "public static ${1:void} ${2:methodName}() {",
+      "global static ${1:void} ${2:methodName}() {",
       "\t$6",
       "}"
     ],
