@@ -51,19 +51,23 @@
     "commands": [
       {
         "command": "my-vscode-utils.toggleMetaFiles",
-        "title": "Hide/Show Salesforce Meta Files"
+        "title": "Hide/Show Salesforce Meta Files (My Utils)"
+      },
+      {
+        "command": "my-vscode-utils.toggleShowTabs",
+        "title": "Hide/Show Editor Tabs (My Utils)"
       },
       {
         "command": "my-vscode-utils.listSnippets",
-        "title": "My VS Code Utils: List Available Snippets"
+        "title": "List Available Snippets (My Utils)"
       },
       {
         "command": "my-vscode-utils.surroundWithMultiLineComment",
-        "title": "Surround Selection with Multi-line Comment"
+        "title": "Surround Selection with Multi-line Comment (My Utils)"
       },
       {
         "command": "my-vscode-utils.surroundWithTryCatch",
-        "title": "Surround Selection with Try/Catch"
+        "title": "Surround Selection with Try/Catch Block (My Utils)"
       }
     ],
     "keybindings": [

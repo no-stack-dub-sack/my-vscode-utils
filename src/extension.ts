@@ -31,6 +31,24 @@ export function activate(context: vscode.ExtensionContext) {
       }
     ),
 
+    toggleShowTabs: vscode.commands.registerCommand(
+      `${EXTENSION_ID}.toggleShowTabs`,
+      async () => {
+        const workbench = vscode.workspace.getConfiguration("workbench");
+        const editor = workbench.editor as any;
+
+        if (editor) {
+          const update = editor.showTabs === "single" ? "multiple" : "single";
+
+          await workbench.update(
+            "editor.showTabs",
+            update,
+            vscode.ConfigurationTarget.Global
+          );
+        }
+      }
+    ),
+
     autoComment: vscode.commands.registerTextEditorCommand(
       `${EXTENSION_ID}.autoComment`,
       () => {
